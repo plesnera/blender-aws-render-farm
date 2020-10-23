@@ -24,11 +24,15 @@ sudo apt --yes install awscli zip unzip
 ##############################################
 ##############################################
 ## CONFIGURATION
+AWS_USER_ID=[aws_access_key_id]
+AWS_SECRET_KEY=[aws_secret_access_key]
+aws configure set default.aws_access_key_id $AWS_USER_ID
+aws configure set default.aws_secret_access_key $AWS_SECRET_KEY
 ##############################################
 ##############################################
 
 ## AWS BUCKET
-AWS_BUCKET=your_bucket_name
+AWS_BUCKET=map-blender
 
 ##############################################
 
@@ -38,8 +42,8 @@ AWS_REGION=us-east-1
 ##############################################
 
 ## GET THE LATEST BLEND FILE ON S3 TO RENDER
-BLENDER_FILENAME=`aws s3 ls s3://$AWS_BUCKET | grep -v / | sort | tail -n 1 | awk '{print $4}' | while read spo; do basename -s .blend $spo; done`
-## OPTIONAL: USE A SPECIFIC BLEND NAME _____.blend 
+BLENDER_FILENAME=`aws s3 ls $AWS_BUCKET/ | grep .blend | awk  '{print $4}' | sed 's/.blend//g'`
+## OPTIONAL: USE A SPECIFIC BLEND NAME _____.blend
 # BLENDER_FILENAME=slater
 
 ##############################################

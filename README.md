@@ -2,15 +2,14 @@
 
 ## Simple instructions and a couple scripts to set up a AWS EC2/S3 Blender Render Farm.
 
+This project was forked from https://github.com/wonderunit/blender-aws-render-farm.
+It has been slightly modified to simplify things a bit and handle texture assets.
+It assumes an s3 bucket with 1 (and only) .blender file and any texture assets used.
+Be sure to save your blender file with the relative file paths as described here.  
+
 The benefits of rendering through AWS is that it is nearly infinitely scalable and the rates are better than any render farm I've seen.
 
 ![image](https://user-images.githubusercontent.com/441117/71633838-d425b400-2be4-11ea-935f-03eb607695db.png)
-
-I built this because I needed to render a 400 frames and on my Mac Pro with 24 cores, each frame was taking 14 minutes. That is 93 hours (almost 4 days) of render time!!! When I use my Blender AWS Render Farm, I spin up 96 core instances for roughly $1/hour. Each instance can render a frame in 3.5 minutes. That means one instance can render the frames in 24 hours. So if you spawn up 24 instances, the sequence will be done in 1 hour. 93 times faster for $24. 
-
-If you set everything up nicely, you just upload your .blend file to your specified S3 bucket and create a spot instance fleet of EC2 servers, as many as you want. It will automatically render that .blend file and save all the frames to S3. You can run a follow up script on a tiny instance to create a zip of all your rendered frames so you can easily download it.
-
-The downside: You have to have to know how AWS works or be willing to figure it out. The upside: You're not a dummy and I have faith in you.
 
 # How it works
 
@@ -20,26 +19,30 @@ There's another project called Brenda https://github.com/gwhobbs/brenda which is
 
 # Setting up AWS Account
 
-Create a bucket
-Create security user
-Create IAM role
-Create S3 full access
-Create an Instance Template
+* Create a bucket 
+* Create service account (limit scope to only read the S3 bucket) in IAM - insert the access_key_id and secret_key in the userdata for the launch template.
+It can easily be improved and made more secure using secrets in parameter store and KMS - so feel free to do so.  
+* Create a Launch Template with the userdata.bash as 'userdata' in the launch template:
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html?icmpid=docs_ec2_console
+
 
 # Preparing your Blend File
+* Collect all your assets and blender file in a single directory and ensure that relative paths in blender is selected when saving: https://docs.blender.org/manual/en/2.79/data_system/files/relative_paths.html
+
+This ensures that your project is easily portable to a flat directory structure in S3 for use in your render farm.
 
 # Starting an instance fleet
+EC2 -> Spot Requests in the console let's you launch a fleet easily guided. 
 
 # Checking it 
 
-Terminal 
-S3
+Terminal or S3
 
 # Cleaning up
 Make sure your cleanup instance has enough EBS to store the frames and the zip!
 
-# Starting over
 
 # MAKE SURE YOUR INSTANCES ARE STOPPED WHEN YOU ARE DONE!
+This is handeled by default by the userdata script but better safe than sorry ....
 
 If you don't cancel, you could get a bill for a lot!
