@@ -39,6 +39,8 @@ EC2 -> Spot Requests in the console let's you launch a fleet easily guided.
 Terminal or S3
 
 # Cleaning up
+* Launch a cleanup instance using the cleanup script - can be a lightweight instance.
+* Delete bucket/files in S3 - this is not done by the cleanup instance.
 Make sure your cleanup instance has enough EBS to store the frames and the zip!
 
 
