@@ -5,7 +5,7 @@
 This project was forked from https://github.com/wonderunit/blender-aws-render-farm.
 It has been slightly modified to simplify things a bit and handle texture assets.
 It assumes an s3 bucket with 1 (and only) .blender file and any texture assets used.
-Be sure to save your blender file with the relative file paths as described here.  
+Be sure to save your blender file with the relative file paths as described below in the steps.  
 
 The benefits of rendering through AWS is that it is nearly infinitely scalable and the rates are better than any render farm I've seen.
 
@@ -43,6 +43,6 @@ Make sure your cleanup instance has enough EBS to store the frames and the zip!
 
 
 # MAKE SURE YOUR INSTANCES ARE STOPPED WHEN YOU ARE DONE!
-This is handeled by default by the userdata script but better safe than sorry ....
+This is handled by default by the userdata script but better safe than sorry ....
 
 If you don't cancel, you could get a bill for a lot!
