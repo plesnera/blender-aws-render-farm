@@ -1,18 +1,5 @@
 #!/bin/bash
 
-##############################################
-## CLEAN UP BASH SCRIPT
-## All this script does is:
-## 1) download all rendered frames,
-## 2) zip them up
-## 3) upload them to s3 so you can just DL one file.
-##
-## You can copy / paste run this on tiny instance.
-## Make sure to edit the config below.
-##
-##                      - <3 Charles
-##                       \\ WONDER UNIT
-##############################################
 
 ###### UPDATE APT-GET
 sudo apt-get update
@@ -24,12 +11,14 @@ sudo apt --yes install awscli zip unzip
 ##############################################
 ##############################################
 ## CONFIGURATION
-AWS_USER_ID=[aws_access_key_id]
-AWS_SECRET_KEY=[aws_secret_access_key]
+##############################################
+##############################################
+
+AWS_USER_ID=
+AWS_SECRET_KEY=
+
 aws configure set default.aws_access_key_id $AWS_USER_ID
 aws configure set default.aws_secret_access_key $AWS_SECRET_KEY
-##############################################
-##############################################
 
 ## AWS BUCKET
 AWS_BUCKET=map-blender
